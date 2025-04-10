@@ -2,7 +2,7 @@
     "applinks": {
         "details": [
             {
-                "paths": ["/"]  // Paths you want Universal Links to handle (adjust based on your test)
+                "paths": ["/"]
             }
         ]
     }
