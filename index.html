@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juho SarvanCo</title>
+    <title>Juho Sarvanko</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500&display=swap" rel="stylesheet">
@@ -70,7 +70,7 @@
             opacity: 0.8;
         }
         
-        /* Cube animation */
+        /* Enhanced Cube Animation */
         .cube-bg {
             position: fixed;
             top: 0;
@@ -79,41 +79,74 @@
             height: 100%;
             z-index: 1;
             pointer-events: none;
+            perspective: 1000px;
         }
         
         .cube {
             position: absolute;
             width: 60px;
             height: 60px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            box-shadow: 0 0 30px rgba(0, 113, 227, 0.2);
-            animation: float 15s ease-in-out infinite, pulse 8s ease-in-out infinite;
-            opacity: 0.2;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            box-shadow: 0 0 30px rgba(0, 113, 227, 0.6);
+            opacity: 0.4;
+            transform-style: preserve-3d;
+            animation: 
+                float 20s ease-in-out infinite, 
+                pulse 8s ease-in-out infinite, 
+                rotate 15s linear infinite,
+                brightness 10s ease-in-out infinite;
         }
         
         @keyframes float {
             0%, 100% {
-                transform: translateY(0) rotate(0deg);
+                transform: translate3d(0, 0, 0);
+            }
+            25% {
+                transform: translate3d(50px, -30px, 20px);
             }
             50% {
-                transform: translateY(-20px) rotate(10deg);
+                transform: translate3d(0, -50px, 0);
+            }
+            75% {
+                transform: translate3d(-50px, -20px, -20px);
             }
         }
         
         @keyframes pulse {
             0%, 100% {
-                box-shadow: 0 0 30px rgba(0, 113, 227, 0.2);
-                background: rgba(0, 113, 227, 0.1);
+                box-shadow: 0 0 30px rgba(0, 113, 227, 0.6);
+                background: rgba(0, 113, 227, 0.3);
+                border-color: rgba(0, 113, 227, 0.5);
             }
             33% {
-                box-shadow: 0 0 30px rgba(255, 45, 85, 0.2);
-                background: rgba(255, 45, 85, 0.1);
+                box-shadow: 0 0 40px rgba(255, 45, 85, 0.6);
+                background: rgba(255, 45, 85, 0.3);
+                border-color: rgba(255, 45, 85, 0.5);
             }
             66% {
-                box-shadow: 0 0 30px rgba(52, 199, 89, 0.2);
-                background: rgba(52, 199, 89, 0.1);
+                box-shadow: 0 0 40px rgba(52, 199, 89, 0.6);
+                background: rgba(52, 199, 89, 0.3);
+                border-color: rgba(52, 199, 89, 0.5);
+            }
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(180deg) rotateZ(360deg);
+            }
+        }
+        
+        @keyframes brightness {
+            0%, 100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 0.8;
             }
         }
         
@@ -141,8 +174,8 @@
     </div>
     
     <div class="container">
-        <div class="logo">SarvanCo</div>
-        <h1>Juho SarvanCo</h1>
+        <div class="logo">SARVANCO</div>
+        <h1>Juho Sarvanko</h1>
         <p class="subtitle">Elegantly bypassing technology limitations with innovative solutions.</p>
         
         <div class="target-url" id="redirection-info">
@@ -187,16 +220,16 @@
         function createCubes() {
             const container = document.getElementById('cube-container');
             const colors = [
-                'rgba(0, 113, 227, 0.1)',    // Blue
-                'rgba(255, 45, 85, 0.1)',    // Red
-                'rgba(52, 199, 89, 0.1)',    // Green
-                'rgba(255, 149, 0, 0.1)',    // Orange
-                'rgba(175, 82, 222, 0.1)',   // Purple
-                'rgba(90, 200, 250, 0.1)',   // Light Blue
+                {bg: 'rgba(0, 113, 227, 0.3)', shadow: 'rgba(0, 113, 227, 0.6)'},     // Blue
+                {bg: 'rgba(255, 45, 85, 0.3)', shadow: 'rgba(255, 45, 85, 0.6)'},     // Red
+                {bg: 'rgba(52, 199, 89, 0.3)', shadow: 'rgba(52, 199, 89, 0.6)'},     // Green
+                {bg: 'rgba(255, 149, 0, 0.3)', shadow: 'rgba(255, 149, 0, 0.6)'},     // Orange
+                {bg: 'rgba(175, 82, 222, 0.3)', shadow: 'rgba(175, 82, 222, 0.6)'},   // Purple
+                {bg: 'rgba(90, 200, 250, 0.3)', shadow: 'rgba(90, 200, 250, 0.6)'},   // Light Blue
             ];
             
-            // Create 20 cubes
-            for (let i = 0; i < 20; i++) {
+            // Create 25 cubes
+            for (let i = 0; i < 25; i++) {
                 const cube = document.createElement('div');
                 cube.className = 'cube';
                 
@@ -207,21 +240,34 @@
                 cube.style.top = y + 'vh';
                 
                 // Random size
-                const size = 20 + Math.random() * 80;
+                const size = 30 + Math.random() * 100;
                 cube.style.width = size + 'px';
                 cube.style.height = size + 'px';
                 
                 // Random color
                 const colorIndex = Math.floor(Math.random() * colors.length);
-                cube.style.background = colors[colorIndex];
+                const color = colors[colorIndex];
+                cube.style.background = color.bg;
+                cube.style.boxShadow = `0 0 30px ${color.shadow}`;
+                cube.style.borderColor = color.shadow;
                 
-                // Random animation delay
-                const delay = Math.random() * 10;
-                cube.style.animationDelay = delay + 's';
+                // Random animation delays for natural movement
+                const floatDelay = Math.random() * 10;
+                const pulseDelay = Math.random() * 8;
+                const rotateDelay = Math.random() * 5;
+                const brightnessDelay = Math.random() * 10;
                 
-                // Random animation duration
-                const duration = 10 + Math.random() * 20;
-                cube.style.animationDuration = duration + 's';
+                cube.style.animationDelay = 
+                    `${floatDelay}s, ${pulseDelay}s, ${rotateDelay}s, ${brightnessDelay}s`;
+                
+                // Random animation durations for variety
+                const floatDuration = 15 + Math.random() * 15;
+                const pulseDuration = 8 + Math.random() * 7;
+                const rotateDuration = 20 + Math.random() * 20;
+                const brightnessDuration = 8 + Math.random() * 7;
+                
+                cube.style.animationDuration = 
+                    `${floatDuration}s, ${pulseDuration}s, ${rotateDuration}s, ${brightnessDuration}s`;
                 
                 // Add to container
                 container.appendChild(cube);
