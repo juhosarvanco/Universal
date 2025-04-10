@@ -1,9 +1,14 @@
 {
-    "applinks": {
-        "details": [
-            {
-                "paths": ["/"]
-            }
-        ]
-    }
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "D69KL9QK33.com.apple.mobilesafari",
+        "paths": ["*"]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["D69KL9QK33.com.apple.mobilesafari"]
+  }
 }
