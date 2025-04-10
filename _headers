@@ -1,0 +1,8 @@
+# Serve apple-app-site-association with correct content type
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  X-Apple-App-Site-Association: domain
+# Handle redirects properly
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
