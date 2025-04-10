@@ -3,33 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0;url=https://example.com">
+    <title>Juho SarvanCo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #000;
+            color: #fff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f8f9fa;
-            color: #333;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
             text-align: center;
-            padding: 0 20px;
+            padding: 2rem;
         }
-        .loader {
-            width: 40px;
-            height: 40px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            margin: 20px auto;
-            animation: spin 1s linear infinite;
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #b9b9b9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .target-url {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin-top: 2rem;
+        }
+        
+        a {
+            color: #0071e3;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+        
+        .cube-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+        
+        .cube {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+            opacity: 0.2;
+        }
+        
+        .cube-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--color1), var(--color2));
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        
+        .face-front { transform: translateZ(25px); }
+        .face-back { transform: rotateY(180deg) translateZ(25px); }
+        .face-right { transform: rotateY(90deg) translateZ(25px); }
+        .face-left { transform: rotateY(-90deg) translateZ(25px); }
+        .face-top { transform: rotateX(90deg) translateZ(25px); }
+        .face-bottom { transform: rotateX(-90deg) translateZ(25px); }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotateX(0) rotateY(0) rotateZ(0);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+        
+        .logo {
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
         }
     </style>
     <script>
@@ -39,22 +139,102 @@
             return urlParams.get('url') || 'https://example.com';
         }
         
-        // Redirect to the target URL
-        window.onload = function() {
+        // Setup redirect if URL parameter is present
+        document.addEventListener('DOMContentLoaded', function() {
             const targetUrl = getTargetUrl();
             document.getElementById('target-url').textContent = targetUrl;
             document.getElementById('manual-link').href = targetUrl;
-            document.querySelector('meta[http-equiv="refresh"]').content = `0;url=${targetUrl}`;
-            window.location.href = targetUrl;
+            
+            // Only redirect if there's a URL parameter
+            if (window.location.search.includes('url=')) {
+                window.location.href = targetUrl;
+            }
+            
+            // Create dynamic cubes
+            createCubes();
+            
+            // Start color transitions
+            setInterval(updateCubeColors, 3000);
+        });
+        
+        function createCubes() {
+            const container = document.querySelector('.cube-container');
+            const numCubes = 20;
+            
+            for (let i = 0; i < numCubes; i++) {
+                const cube = document.createElement('div');
+                cube.className = 'cube';
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                cube.style.left = `${posX}%`;
+                cube.style.top = `${posY}%`;
+                
+                // Random size
+                const size = 30 + Math.random() * 80;
+                cube.style.width = `${size}px`;
+                cube.style.height = `${size}px`;
+                
+                // Random animation delay and duration
+                const delay = Math.random() * 10;
+                const duration = 15 + Math.random() * 20;
+                cube.style.animationDelay = `${delay}s`;
+                cube.style.animationDuration = `${duration}s`;
+                
+                // Random initial colors
+                setRandomColors(cube);
+                
+                // Add faces
+                const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
+                faces.forEach(face => {
+                    const el = document.createElement('div');
+                    el.className = `cube-face face-${face}`;
+                    cube.appendChild(el);
+                });
+                
+                container.appendChild(cube);
+            }
+        }
+        
+        function setRandomColors(cube) {
+            const colors = [
+                '#0071e3', '#5ac8fa', '#30b0c7', '#5e5ce6', '#bf5af2', 
+                '#ff2d55', '#ff9500', '#ffcc00', '#34c759', '#007aff'
+            ];
+            
+            const color1 = colors[Math.floor(Math.random() * colors.length)];
+            const color2 = colors[Math.floor(Math.random() * colors.length)];
+            
+            cube.style.setProperty('--color1', color1);
+            cube.style.setProperty('--color2', color2);
+        }
+        
+        function updateCubeColors() {
+            const cubes = document.querySelectorAll('.cube');
+            cubes.forEach(cube => {
+                setRandomColors(cube);
+            });
         }
     </script>
 </head>
 <body>
-    <div>
-        <h2>Redirecting you to your destination...</h2>
-        <div class="loader"></div>
-        <p>Going to: <span id="target-url">https://example.com</span></p>
-        <p>If you are not redirected automatically, <a id="manual-link" href="https://example.com">click here</a>.</p>
+    <div class="cube-container"></div>
+    
+    <div class="container">
+        <div class="logo">SarvanCo</div>
+        <h1>Juho SarvanCo</h1>
+        <p class="subtitle">Elegantly bypassing technology limitations with innovative solutions.</p>
+        
+        <div class="target-url" id="redirection-info">
+            <!-- Only show if there's a URL parameter -->
+            <script>
+                if (window.location.search.includes('url=')) {
+                    document.write(`<p>Redirecting to: <span id="target-url">destination</span></p>
+                    <p>If you are not redirected automatically, <a id="manual-link" href="#">click here</a>.</p>`);
+                }
+            </script>
+        </div>
     </div>
 </body>
 </html>
