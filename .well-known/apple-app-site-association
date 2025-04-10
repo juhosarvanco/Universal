@@ -1,1 +1,10 @@
-
+{
+    "applinks": {
+        "details": [
+            {
+                "appID": "ABCDE12345.com.yourcompany.yourapp",  // Optional for your case
+                "paths": ["/"]  // Paths you want Universal Links to handle (adjust based on your test)
+            }
+        ]
+    }
+}
