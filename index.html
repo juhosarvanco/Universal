@@ -70,48 +70,50 @@
             opacity: 0.8;
         }
         
-        .cube-container {
-            position: absolute;
+        /* Cube animation */
+        .cube-bg {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 1;
-            perspective: 1000px;
-            overflow: hidden;
+            pointer-events: none;
         }
         
         .cube {
             position: absolute;
-            width: 50px;
-            height: 50px;
-            transform-style: preserve-3d;
-            animation: rotate 20s infinite linear;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            box-shadow: 0 0 30px rgba(0, 113, 227, 0.2);
+            animation: float 15s ease-in-out infinite, pulse 8s ease-in-out infinite;
             opacity: 0.2;
         }
         
-        .cube-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--color1), var(--color2));
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
         }
         
-        .face-front { transform: translateZ(25px); }
-        .face-back { transform: rotateY(180deg) translateZ(25px); }
-        .face-right { transform: rotateY(90deg) translateZ(25px); }
-        .face-left { transform: rotateY(-90deg) translateZ(25px); }
-        .face-top { transform: rotateX(90deg) translateZ(25px); }
-        .face-bottom { transform: rotateX(-90deg) translateZ(25px); }
-        
-        @keyframes rotate {
-            0% {
-                transform: rotateX(0) rotateY(0) rotateZ(0);
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(0, 113, 227, 0.2);
+                background: rgba(0, 113, 227, 0.1);
             }
-            100% {
-                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            33% {
+                box-shadow: 0 0 30px rgba(255, 45, 85, 0.2);
+                background: rgba(255, 45, 85, 0.1);
+            }
+            66% {
+                box-shadow: 0 0 30px rgba(52, 199, 89, 0.2);
+                background: rgba(52, 199, 89, 0.1);
             }
         }
         
@@ -132,98 +134,15 @@
             }
         }
     </style>
-    <script>
-        // Parse the target URL from query parameters
-        function getTargetUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('url') || 'https://example.com';
-        }
-        
-        // Setup redirect if URL parameter is present
-        document.addEventListener('DOMContentLoaded', function() {
-            const targetUrl = getTargetUrl();
-            document.getElementById('target-url').textContent = targetUrl;
-            document.getElementById('manual-link').href = targetUrl;
-            
-            // Only redirect if there's a URL parameter
-            if (window.location.search.includes('url=')) {
-                window.location.href = targetUrl;
-            }
-            
-            // Create dynamic cubes
-            createCubes();
-            
-            // Start color transitions
-            setInterval(updateCubeColors, 3000);
-        });
-        
-        function createCubes() {
-            const container = document.querySelector('.cube-container');
-            const numCubes = 20;
-            
-            for (let i = 0; i < numCubes; i++) {
-                const cube = document.createElement('div');
-                cube.className = 'cube';
-                
-                // Random position
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                cube.style.left = `${posX}%`;
-                cube.style.top = `${posY}%`;
-                
-                // Random size
-                const size = 30 + Math.random() * 80;
-                cube.style.width = `${size}px`;
-                cube.style.height = `${size}px`;
-                
-                // Random animation delay and duration
-                const delay = Math.random() * 10;
-                const duration = 15 + Math.random() * 20;
-                cube.style.animationDelay = `${delay}s`;
-                cube.style.animationDuration = `${duration}s`;
-                
-                // Random initial colors
-                setRandomColors(cube);
-                
-                // Add faces
-                const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
-                faces.forEach(face => {
-                    const el = document.createElement('div');
-                    el.className = `cube-face face-${face}`;
-                    cube.appendChild(el);
-                });
-                
-                container.appendChild(cube);
-            }
-        }
-        
-        function setRandomColors(cube) {
-            const colors = [
-                '#0071e3', '#5ac8fa', '#30b0c7', '#5e5ce6', '#bf5af2', 
-                '#ff2d55', '#ff9500', '#ffcc00', '#34c759', '#007aff'
-            ];
-            
-            const color1 = colors[Math.floor(Math.random() * colors.length)];
-            const color2 = colors[Math.floor(Math.random() * colors.length)];
-            
-            cube.style.setProperty('--color1', color1);
-            cube.style.setProperty('--color2', color2);
-        }
-        
-        function updateCubeColors() {
-            const cubes = document.querySelectorAll('.cube');
-            cubes.forEach(cube => {
-                setRandomColors(cube);
-            });
-        }
-    </script>
 </head>
 <body>
-    <div class="cube-container"></div>
+    <div class="cube-bg" id="cube-container">
+        <!-- Cubes will be added here by JavaScript -->
+    </div>
     
     <div class="container">
         <div class="logo">SarvanCo</div>
-        <h1>Juho Sarvanko</h1>
+        <h1>Juho SarvanCo</h1>
         <p class="subtitle">Elegantly bypassing technology limitations with innovative solutions.</p>
         
         <div class="target-url" id="redirection-info">
@@ -236,5 +155,78 @@
             </script>
         </div>
     </div>
+
+    <script>
+        // Parse the target URL from query parameters
+        function getTargetUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('url') || 'https://example.com';
+        }
+        
+        // Setup redirect if URL parameter is present
+        window.onload = function() {
+            const targetUrl = getTargetUrl();
+            
+            // Only redirect if there's a URL parameter
+            if (window.location.search.includes('url=')) {
+                const targetElement = document.getElementById('target-url');
+                const manualLink = document.getElementById('manual-link');
+                
+                if (targetElement) targetElement.textContent = targetUrl;
+                if (manualLink) manualLink.href = targetUrl;
+                
+                setTimeout(function() {
+                    window.location.href = targetUrl;
+                }, 1500); // Short delay to show the page before redirecting
+            }
+            
+            // Create the cubes
+            createCubes();
+        };
+        
+        function createCubes() {
+            const container = document.getElementById('cube-container');
+            const colors = [
+                'rgba(0, 113, 227, 0.1)',    // Blue
+                'rgba(255, 45, 85, 0.1)',    // Red
+                'rgba(52, 199, 89, 0.1)',    // Green
+                'rgba(255, 149, 0, 0.1)',    // Orange
+                'rgba(175, 82, 222, 0.1)',   // Purple
+                'rgba(90, 200, 250, 0.1)',   // Light Blue
+            ];
+            
+            // Create 20 cubes
+            for (let i = 0; i < 20; i++) {
+                const cube = document.createElement('div');
+                cube.className = 'cube';
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                cube.style.left = x + 'vw';
+                cube.style.top = y + 'vh';
+                
+                // Random size
+                const size = 20 + Math.random() * 80;
+                cube.style.width = size + 'px';
+                cube.style.height = size + 'px';
+                
+                // Random color
+                const colorIndex = Math.floor(Math.random() * colors.length);
+                cube.style.background = colors[colorIndex];
+                
+                // Random animation delay
+                const delay = Math.random() * 10;
+                cube.style.animationDelay = delay + 's';
+                
+                // Random animation duration
+                const duration = 10 + Math.random() * 20;
+                cube.style.animationDuration = duration + 's';
+                
+                // Add to container
+                container.appendChild(cube);
+            }
+        }
+    </script>
 </body>
 </html>
