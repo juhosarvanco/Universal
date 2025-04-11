@@ -3,19 +3,14 @@
     "apps": [],
     "details": [
       {
-        "appID": "D69KL9QK33.com.apple.mobilesafari",
-        "paths": ["*"],
-        "appIDs": ["D69KL9QK33.com.apple.mobilesafari"],
+        "appIDs": ["XXXXXXXXXX.com.example.nonexistentapp"],
         "components": [
           {
-            "/": "/*",
-            "comment": "Matches all URLs on juho.one"
+            "/": "*",
+            "comment": "Matches all URLs"
           }
         ]
       }
     ]
-  },
-  "webcredentials": {
-    "apps": ["D69KL9QK33.com.apple.mobilesafari"]
   }
 }
