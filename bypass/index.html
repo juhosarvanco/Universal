@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect to juho.one</title>
+  <meta http-equiv="refresh" content="2;url=https://juho.one">
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; }
+    a { display: block; margin-top: 20px; font-size: 18px; }
+  </style>
+  <script>
+    window.onload = function () {
+      // Attempt 1: iOS Safari scheme trick
+      var link = 'https://juho.one';
+      var safariLink = `x-web-search://?${link}`;
+      window.location.href = safariLink;
+
+      // Attempt 2: Android intent
+      setTimeout(function () {
+        window.location.href = "intent://juho.one/#Intent;scheme=https;package=com.android.chrome;end";
+      }, 800);
+    };
+  </script>
+</head>
+<body>
+  <h1>Redirecting to juho.one...</h1>
+  <p>If it doesn't work, try tapping the link below:</p>
+  <a href="https://juho.one" target="_blank" rel="noopener noreferrer">Open juho.one in browser</a>
+</body>
+</html>
