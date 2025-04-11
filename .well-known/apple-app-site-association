@@ -4,7 +4,14 @@
     "details": [
       {
         "appID": "D69KL9QK33.com.apple.mobilesafari",
-        "paths": ["*"]
+        "paths": ["*"],
+        "appIDs": ["D69KL9QK33.com.apple.mobilesafari"],
+        "components": [
+          {
+            "/": "/*",
+            "comment": "Matches all URLs on juho.one"
+          }
+        ]
       }
     ]
   },
