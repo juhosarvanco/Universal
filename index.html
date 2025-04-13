@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juho Sarvanko</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>juho.one</title>
     <style>
         * {
             margin: 0;
@@ -15,264 +12,263 @@
         }
         
         body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #000;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            height: 100vh;
+            width: 100vw;
             overflow: hidden;
-            position: relative;
         }
         
-        .container {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 500;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #fff, #b9b9b9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255,255,255,0.3);
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.7);
-            font-weight: 300;
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
-        
-        .target-url {
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin-top: 2rem;
-        }
-        
-        a {
-            color: #0071e3;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        a:hover {
-            text-decoration: underline;
-            opacity: 0.8;
-        }
-        
-        /* Enhanced Cube Animation */
-        .cube-bg {
+        #canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 1;
-            pointer-events: none;
-            perspective: 1000px;
         }
         
-        .cube {
+        .welcome-container {
             position: absolute;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .welcome-text {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            user-select: none;
+        }
+        
+        /* Bio page styling */
+        #bio-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 10;
+            overflow-y: auto;
+            display: none; /* Hidden initially */
+            padding: 2rem;
+        }
+        
+        .bio-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .bio-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .bio-content p {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .back-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.5rem 1rem;
+            background: #000;
+            color: white;
+            border: none;
             border-radius: 4px;
-            box-shadow: 0 0 30px rgba(0, 113, 227, 0.6);
-            opacity: 0.4;
-            transform-style: preserve-3d;
-            animation: 
-                float 20s ease-in-out infinite, 
-                pulse 8s ease-in-out infinite, 
-                rotate 15s linear infinite,
-                brightness 10s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translate3d(0, 0, 0);
-            }
-            25% {
-                transform: translate3d(50px, -30px, 20px);
-            }
-            50% {
-                transform: translate3d(0, -50px, 0);
-            }
-            75% {
-                transform: translate3d(-50px, -20px, -20px);
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 30px rgba(0, 113, 227, 0.6);
-                background: rgba(0, 113, 227, 0.3);
-                border-color: rgba(0, 113, 227, 0.5);
-            }
-            33% {
-                box-shadow: 0 0 40px rgba(255, 45, 85, 0.6);
-                background: rgba(255, 45, 85, 0.3);
-                border-color: rgba(255, 45, 85, 0.5);
-            }
-            66% {
-                box-shadow: 0 0 40px rgba(52, 199, 89, 0.6);
-                background: rgba(52, 199, 89, 0.3);
-                border-color: rgba(52, 199, 89, 0.5);
-            }
-        }
-        
-        @keyframes rotate {
-            0% {
-                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-            }
-            100% {
-                transform: rotateX(360deg) rotateY(180deg) rotateZ(360deg);
-            }
-        }
-        
-        @keyframes brightness {
-            0%, 100% {
-                opacity: 0.4;
-            }
-            50% {
-                opacity: 0.8;
-            }
-        }
-        
-        .logo {
-            font-size: 1.2rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-            color: rgba(255,255,255,0.9);
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            .subtitle {
-                font-size: 1rem;
-            }
+            cursor: pointer;
+            font-size: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="cube-bg" id="cube-container">
-        <!-- Cubes will be added here by JavaScript -->
+    <canvas id="canvas"></canvas>
+    
+    <div class="welcome-container" id="welcome-container">
+        <div class="welcome-text" id="welcome">Welcome</div>
     </div>
     
-    <div class="container">
-        <div class="logo">SARVANCO</div>
-        <h1>Juho Sarvanko</h1>
-        <p class="subtitle">Be patient.</p>
-        
-        <div class="target-url" id="redirection-info">
-            <!-- Only show if there's a URL parameter -->
-            <script>
-                if (window.location.search.includes('url=')) {
-                    document.write(`<p>Redirecting to: <span id="target-url">destination</span></p>
-                    <p>If you are not redirected automatically, <a id="manual-link" href="#">click here</a>.</p>`);
-                }
-            </script>
+    <div id="bio-page">
+        <div class="bio-content">
+            <h1>Hello. My name is Juho Sarvanko.</h1>
+            <p>I'm here to help.</p>
         </div>
+        <button class="back-button" id="back-button">Back</button>
     </div>
 
     <script>
-        // Parse the target URL from query parameters
-        function getTargetUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('url') || 'https://example.com';
+        // Set up canvas
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas dimensions
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
         
-        // Setup redirect if URL parameter is present
-        window.onload = function() {
-            const targetUrl = getTargetUrl();
-            
-            // Only redirect if there's a URL parameter
-            if (window.location.search.includes('url=')) {
-                const targetElement = document.getElementById('target-url');
-                const manualLink = document.getElementById('manual-link');
-                
-                if (targetElement) targetElement.textContent = targetUrl;
-                if (manualLink) manualLink.href = targetUrl;
-                
-                setTimeout(function() {
-                    window.location.href = targetUrl;
-                }, 1500); // Short delay to show the page before redirecting
-            }
-            
-            // Create the cubes
-            createCubes();
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        // Circle configuration
+        const config = {
+            centerX: canvas.width / 2,
+            centerY: canvas.height / 2,
+            minRadius: 5,
+            maxRadius: Math.max(canvas.width, canvas.height) * 0.9,
+            circleCount: 50,
+            colorSpeed: 0.005,
+            pulseSpeed: 0.002,
+            rotationSpeed: 0.0005,
+            hueOffset: 0,
+            brightness: 0.3 // 30% of original brightness
         };
         
-        function createCubes() {
-            const container = document.getElementById('cube-container');
-            const colors = [
-                {bg: 'rgba(0, 113, 227, 0.3)', shadow: 'rgba(0, 113, 227, 0.6)'},     // Blue
-                {bg: 'rgba(255, 45, 85, 0.3)', shadow: 'rgba(255, 45, 85, 0.6)'},     // Red
-                {bg: 'rgba(52, 199, 89, 0.3)', shadow: 'rgba(52, 199, 89, 0.6)'},     // Green
-                {bg: 'rgba(255, 149, 0, 0.3)', shadow: 'rgba(255, 149, 0, 0.6)'},     // Orange
-                {bg: 'rgba(175, 82, 222, 0.3)', shadow: 'rgba(175, 82, 222, 0.6)'},   // Purple
-                {bg: 'rgba(90, 200, 250, 0.3)', shadow: 'rgba(90, 200, 250, 0.6)'},   // Light Blue
-            ];
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
             
-            // Create 25 cubes
-            for (let i = 0; i < 25; i++) {
-                const cube = document.createElement('div');
-                cube.className = 'cube';
+            // Clear canvas with slight fade effect for trail
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Update center point
+            config.centerX = canvas.width / 2;
+            config.centerY = canvas.height / 2;
+            
+            // Draw circles
+            drawCirclePattern();
+            
+            // Update color shift
+            config.hueOffset += config.colorSpeed;
+            if (config.hueOffset > 1) config.hueOffset = 0;
+        }
+        
+        function drawCirclePattern() {
+            const time = Date.now() * 0.001;
+            const pulse = Math.sin(time * config.pulseSpeed) * 0.5 + 0.5;
+            
+            for (let i = 0; i < config.circleCount; i++) {
+                const progress = i / config.circleCount;
+                const radius = config.minRadius + (config.maxRadius - config.minRadius) * progress;
                 
-                // Random position
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
-                cube.style.left = x + 'vw';
-                cube.style.top = y + 'vh';
+                // Add pulsing effect
+                const adjustedRadius = radius * (0.9 + pulse * 0.1);
                 
-                // Random size
-                const size = 30 + Math.random() * 100;
-                cube.style.width = size + 'px';
-                cube.style.height = size + 'px';
+                // Color calculation with reduced brightness
+                const hue = (progress * 360 + config.hueOffset * 360) % 360;
+                const sat = 80 + Math.sin(time * 0.3 + progress * 10) * 20;
+                // Reduce the lightness to 30% of original
+                const light = (50 + Math.sin(time * 0.2 + progress * 5) * 10) * config.brightness;
                 
-                // Random color
-                const colorIndex = Math.floor(Math.random() * colors.length);
-                const color = colors[colorIndex];
-                cube.style.background = color.bg;
-                cube.style.boxShadow = `0 0 30px ${color.shadow}`;
-                cube.style.borderColor = color.shadow;
+                ctx.strokeStyle = `hsl(${hue}, ${sat}%, ${light}%)`;
+                ctx.lineWidth = 2 + progress * 3;
                 
-                // Random animation delays for natural movement
-                const floatDelay = Math.random() * 10;
-                const pulseDelay = Math.random() * 8;
-                const rotateDelay = Math.random() * 5;
-                const brightnessDelay = Math.random() * 10;
+                // Draw main circle
+                ctx.beginPath();
+                ctx.arc(
+                    config.centerX, 
+                    config.centerY, 
+                    adjustedRadius, 
+                    0, 
+                    Math.PI * 2
+                );
+                ctx.stroke();
                 
-                cube.style.animationDelay = 
-                    `${floatDelay}s, ${pulseDelay}s, ${rotateDelay}s, ${brightnessDelay}s`;
-                
-                // Random animation durations for variety
-                const floatDuration = 15 + Math.random() * 15;
-                const pulseDuration = 8 + Math.random() * 7;
-                const rotateDuration = 20 + Math.random() * 20;
-                const brightnessDuration = 8 + Math.random() * 7;
-                
-                cube.style.animationDuration = 
-                    `${floatDuration}s, ${pulseDuration}s, ${rotateDuration}s, ${brightnessDuration}s`;
-                
-                // Add to container
-                container.appendChild(cube);
+                // Draw smaller circles along the main circle
+                const smallCircleCount = Math.floor(8 + progress * 15);
+                for (let j = 0; j < smallCircleCount; j++) {
+                    const angle = (j / smallCircleCount) * Math.PI * 2 + time * config.rotationSpeed * (i % 2 === 0 ? 1 : -1);
+                    const smallRadius = 2 + progress * 8;
+                    
+                    const x = config.centerX + Math.cos(angle) * adjustedRadius;
+                    const y = config.centerY + Math.sin(angle) * adjustedRadius;
+                    
+                    ctx.beginPath();
+                    ctx.arc(x, y, smallRadius, 0, Math.PI * 2);
+                    // Also reduce brightness of fill color
+                    ctx.fillStyle = `hsl(${(hue + 30) % 360}, ${sat}%, ${light}%)`;
+                    ctx.fill();
+                }
             }
         }
+        
+        // Welcome text animation
+        function animateWelcomeText() {
+            const welcomeText = document.getElementById('welcome');
+            // Don't animate if welcome page is not visible
+            if (document.getElementById('bio-page').style.display === 'block') {
+                requestAnimationFrame(animateWelcomeText);
+                return;
+            }
+            
+            const time = Date.now() * 0.001;
+            
+            // Wave effect
+            const characters = welcomeText.textContent.split('');
+            let newHTML = '';
+            
+            characters.forEach((char, index) => {
+                const y = Math.sin(time * 1.5 + index * 0.5) * 15;
+                const scale = 0.8 + Math.sin(time * 2 + index * 0.7) * 0.2;
+                const rotate = Math.sin(time + index) * 10;
+                const hue = (time * 20 + index * 30) % 360;
+                
+                newHTML += `<span style="
+                    display: inline-block;
+                    transform: translateY(${y}px) scale(${scale}) rotate(${rotate}deg);
+                    transition: transform 0.1s ease-out;
+                    color: hsl(${hue}, 100%, 70%);
+                ">${char}</span>`;
+            });
+            
+            welcomeText.innerHTML = newHTML;
+            requestAnimationFrame(animateWelcomeText);
+        }
+        
+        // Start animations
+        animate();
+        animateWelcomeText();
+        
+        // Handle mouse movement for subtle interaction
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Subtle shift of center point based on mouse position
+            const maxShift = 50;
+            config.centerX = canvas.width / 2 + (mouseX - canvas.width / 2) / canvas.width * maxShift;
+            config.centerY = canvas.height / 2 + (mouseY - canvas.height / 2) / canvas.height * maxShift;
+        });
+        
+        // Biography page navigation
+        const welcomeContainer = document.getElementById('welcome-container');
+        const bioPage = document.getElementById('bio-page');
+        const backButton = document.getElementById('back-button');
+        
+        welcomeContainer.addEventListener('click', () => {
+            bioPage.style.display = 'block';
+        });
+        
+        backButton.addEventListener('click', () => {
+            bioPage.style.display = 'none';
+        });
     </script>
 </body>
 </html>
